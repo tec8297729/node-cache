@@ -31,7 +31,6 @@ export const initNodeCache = (options?: NodeCacheOpts) => {
     ...defaultOpts,
     ...options,
   });
-  console.log('初始化执行次数');
 };
 
 // node缓存数据
@@ -39,7 +38,7 @@ export const nodeCacheData = async <T,>({
   key,
   cb, // 接口回调
   code = 0, // 缓存标识码
-  debug, // 是否开启调试模式，会打印查看是否记录了缓存
+  debug, // 是否开启调试模式，会打印是否记录缓存
   isCustom = false, // 是否自定义缓存
 }: ICacheData): Promise<T> => {
   if (!ssrCache) initNodeCache();
