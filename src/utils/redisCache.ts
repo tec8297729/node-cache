@@ -49,10 +49,6 @@ export const redisCacheData = <T>({
 }: ICacheData): Promise<T> => {
   if (!redisClient) redisCacheInit();
   return new Promise((resolve, reject) => {
-    if (typeof window === 'undefined') {
-      resolve(cb?.());
-      return;
-    }
     try {
       redisClient.get(key, (_err, reply) => {
         // 有缓存情况
