@@ -4,10 +4,10 @@ node高速缓存插件，内存读写缓存功能。
 
 简单包裹后端接口方法，即可享受高速缓存效果，
 
-## 使用方法
+## 内存缓存使用方法
 
 以nextjs框架使用案例
-1、node启动层调用初始方法 initNodeCache
+1、node启动层调用初始方法 memoryCacheInit
 
 ``` ts
 const Koa = require('koa');
@@ -19,7 +19,7 @@ const server = new Koa();
 app.prepare().then(() => {
   // ...其它配置
   // nodeCache初始化缓存，以下为默认参数
-  initNodeCache({
+  memoryCacheInit({
     max: 500, // 缓存最大值
     maxAge: 1000 * 60 * 5, // 1小时（60），5分钟
   }); 
@@ -29,16 +29,16 @@ app.prepare().then(() => {
 }
 ```
 
-2、需要缓存接口，调用nodeCacheData方法进行包裹，即可缓存数据。
+2、需要缓存接口，调用memoryCacheData方法进行包裹，即可缓存数据。
 
 ``` jsx
 import React from 'react';
-import { nodeCacheData } from '@kkb/node-cache';
+import { memoryCacheData } from '@kkb/node-cache';
 import { getHomeData } from '../../services/commonService';
 
 const Home = () => {}
 export const getServerSideProps = async content => {
-  const res = await nodeCacheData({
+  const res = await memoryCacheData({
     key: 'dataKey', // 缓存key，需要唯一性
     cb: () => getHomeData(), // cb缓存回调，getHomeData是后端接口
     debug: false, // 是否开启调试模式（可选），会打印是否记录缓存
@@ -50,3 +50,5 @@ export const getServerSideProps = async content => {
 };
 export default Home;
 ```
+
+## redis缓存使用方法

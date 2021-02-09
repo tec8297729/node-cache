@@ -118,8 +118,10 @@
     "webpackbar": "5.0.0-3"
   },
   "dependencies": {
+    "@types/redis": "^2.8.28",
     "lru-cache": "^6.0.0",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "redis": "^3.0.2"
   }
 }
