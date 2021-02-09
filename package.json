@@ -1,7 +1,7 @@
 {
   "name": "@kkb/node-cache",
   "version": "0.0.1",
-  "description": "",
+  "description": "node端数据 高速缓存插件",
   "publishConfig": {
     "registry": "https://registry-npm.kaikeba.com/"
   },

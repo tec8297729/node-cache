@@ -1,28 +1,50 @@
 import LRU from 'lru-cache';
 
-const options = {
-  max: 500, // 缓存最大值
-  maxAge: 1000 * 60 * 2, // 1小时（60），2分钟
-};
-const ssrCache = new LRU(options);
+interface NodeCacheOpts {
+  max?: number;
+  maxAge?: number;
+}
 
 interface ICacheData {
   key: string;
   cb: () => Promise<any>;
-  code: number | null | undefined;
-  debug: boolean;
-  isCustom: boolean;
+  code?: number | null | undefined;
+  debug?: boolean;
+  isCustom?: boolean;
 }
 
-const nodeCache = async <T,>({
+interface SsrCacheType {
+  has: (key: string) => boolean;
+  get: (key: string) => any;
+  set: (key: string, data: any) => void;
+}
+
+let ssrCache: SsrCacheType;
+
+// 初始化环境参数，默认5分钟
+export const initNodeCache = (options?: NodeCacheOpts) => {
+  const defaultOpts = {
+    max: 500, // 缓存最大值
+    maxAge: 1000 * 60 * 5, // 1小时（60），5分钟
+  };
+  ssrCache = new LRU({
+    ...defaultOpts,
+    ...options,
+  });
+  console.log('初始化执行次数');
+};
+
+// node缓存数据
+export const nodeCacheData = async <T,>({
   key,
   cb, // 接口回调
   code = 0, // 缓存标识码
   debug, // 是否开启调试模式，会打印查看是否记录了缓存
   isCustom = false, // 是否自定义缓存
 }: ICacheData): Promise<T> => {
-  // 有缓存情况
+  if (!ssrCache) initNodeCache();
   if (ssrCache.has(key)) {
+    // 有缓存情况
     const cacheRes = ssrCache.get(key);
     if (!debug) console.warn(`CACHE HIT: ${key}`);
     return cacheRes;
@@ -35,5 +57,3 @@ const nodeCache = async <T,>({
   }
   return cbRes;
 };
-
-export { nodeCache };
