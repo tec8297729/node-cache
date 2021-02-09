@@ -1,6 +1,6 @@
 {
   "name": "@kkb/node-cache",
-  "version": "0.0.5",
+  "version": "0.1.5",
   "description": "node端数据 高速缓存插件",
   "publishConfig": {
     "registry": "https://registry-npm.kaikeba.com/"
@@ -19,6 +19,9 @@
   },
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "maintainers": [
+    "zhanzhiqiang"
+  ],
   "keywords": [],
   "author": {
     "name": "tec",
@@ -119,9 +122,13 @@
   },
   "dependencies": {
     "@types/redis": "^2.8.28",
+    "assert": "^2.0.0",
+    "install": "^0.13.0",
     "lru-cache": "^6.0.0",
+    "npm": "^7.5.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "util": "^0.12.3"
   }
 }

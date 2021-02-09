@@ -12,6 +12,7 @@ interface ICacheData {
 interface RedisCacheOpts extends redis.ClientOpts {
   expire?: number;
   errorCb?: (e: any) => void; // 错误时回调
+  readyCb?: (client: redis.RedisClient) => void; // 连接成功回调
 }
 
 let redisClient: redis.RedisClient;
@@ -22,11 +23,14 @@ let globalExpire: number = 60; // 全局缓存过期时间，单位秒
  * @options 文档https://www.npmjs.com/package/redis
  */
 export const redisCacheInit = (options?: RedisCacheOpts) => {
-  const { expire, errorCb, ...redisOpts } = options || {};
+  const { expire, errorCb, readyCb, ...redisOpts } = options || {};
   globalExpire = expire || globalExpire;
 
   redisClient = redis.createClient({
     ...redisOpts,
+  });
+  redisClient.on('ready', () => {
+    readyCb?.(redisClient);
   });
 
   redisClient.on('error', (error) => {
@@ -45,6 +49,10 @@ export const redisCacheData = <T>({
 }: ICacheData): Promise<T> => {
   if (!redisClient) redisCacheInit();
   return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      resolve(cb?.());
+      return;
+    }
     try {
       redisClient.get(key, (_err, reply) => {
         // 有缓存情况
@@ -61,7 +69,7 @@ export const redisCacheData = <T>({
             // 指定key缓存过期时间，超过后自动清除redis数据
             redisClient.expire(key, expire ?? globalExpire);
           }
-          return cbRes;
+          resolve(cbRes);
         });
       });
     } catch (error) {

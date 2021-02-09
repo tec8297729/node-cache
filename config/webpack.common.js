@@ -21,6 +21,15 @@ const webpackConfig = {
     alias: {
       '@': paths.appSrc,
     },
+    // 指定一些node包集成
+    fallback: {
+      util: require.resolve('util/'), // 第三方包
+      assert: require.resolve('assert/'),
+      fs: false,
+      tls: false,
+      net: false,
+      path: false,
+    },
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   bail: false,
@@ -39,45 +48,6 @@ const webpackConfig = {
           'ts-loader',
         ],
         exclude: /node_modules/,
-      },
-      {
-        test: /\.(c|le)ss?$/,
-        include: [paths.appSrc],
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              esModule: true,
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              localIdentName: '[local]_[contenthash:8]',
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                javascriptEnabled: true,
-              },
-              sourceMap: false,
-            },
-          },
-          'postcss-loader',
-        ],
-      },
-      // Images
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-        type: 'asset/resource',
-      },
-      // Fonts and SVGs
-      {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-        type: 'asset/inline',
       },
     ],
   },

@@ -32,7 +32,7 @@ module.exports = {
   ],
   plugins: ['eslint-comments', 'jest', 'unicorn', 'react-hooks'],
   env: {
-    browser: true,
+    browser: false,
     node: true,
     es6: true,
     mocha: true,

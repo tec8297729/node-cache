@@ -22,6 +22,7 @@ module.exports = function (config) {
             type: 'commonjs',
           },
       libraryTarget: isBuildWin ? 'umd' : 'commonjs',
+      globalObject: 'this',
     },
     optimization: {
       splitChunks: {
