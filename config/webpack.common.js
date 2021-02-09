@@ -24,6 +24,7 @@ const webpackConfig = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   bail: false,
+  target: 'node',
   module: {
     rules: [
       {
