@@ -20,7 +20,7 @@
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "maintainers": [
-    "zhanzhiqiang"
+    "zhanzhiqiang", "admin"
   ],
   "keywords": [],
   "author": {
