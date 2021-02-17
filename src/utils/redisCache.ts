@@ -61,12 +61,12 @@ export const redisCacheData = <T>({
       redisClient.get(key, (_err, reply) => {
         // 有缓存情况
         if (reply) {
-          if (!debug) console.warn(`CACHE HIT: ${key}`);
+          if (debug) console.warn(`CACHE HIT: ${key}`);
           resolve(JSON.parse(reply));
           return;
         }
         cb?.().then((cbRes) => {
-          if (!debug) console.warn(`CACHE MISS: ${key}`);
+          if (debug) console.warn(`CACHE MISS: ${key}`);
           // 缓存
           if ((!isCustom && cbRes?.code === code) || isCustom) {
             redisClient.set(key, JSON.stringify(cbRes));

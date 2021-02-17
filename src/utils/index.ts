@@ -1,12 +1,13 @@
 type AxiosArrType = Promise<any>[];
 
 /**
- *  Promise异步调用全部数据请求，统一处理返回
+ * Promise异步调用全部数据请求，统一处理返回数据
+ * @axiosArr []数组类型，放入所有接口数据请求
  */
 export const promiseAll = (axiosArr: AxiosArrType): Promise<any> => {
   return new Promise((resolve) => {
     if (!Array.isArray(axiosArr)) {
-      throw new TypeError('axiosArr must be an array');
+      throw new Error('axiosArr must be an array');
     }
 
     const result: AxiosArrType = [];

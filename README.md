@@ -4,6 +4,8 @@
 
 简单包裹后端接口方法，即可享受高速缓存效果，或是使用redis高级API功能，让你的集群更高效的缓存数据！！
 
+内置高效的promiseAll方法，混合缓存API使用方式见文档说明！
+
 ## 普通缓存使用方法
 
 以nextjs框架使用案例
@@ -23,7 +25,7 @@ app.prepare().then(() => {
   memoryCacheInit({
     max: 500, // 缓存最大值
     maxAge: 1000 * 60 * 5, // 默认5分钟
-  }); 
+  });
   server.listen(6000, () => {
     console.log(`> Ready on http://localhost:${port}`);
   }); 
@@ -44,7 +46,7 @@ export const getServerSideProps = async content => {
   const res = await memoryCacheData({
     key: 'dataKey', // 缓存key，需要唯一性
     cb: () => getHomeData(), // cb缓存回调，getHomeData是后端接口
-    debug: false, // 是否开启调试模式（可选），会打印是否记录缓存
+    debug: true, // 是否开启调试模式（可选），会打印是否记录缓存
     code: 0, // 缓存标识码（可选），默认为0，此code是接口返回的数据中带有code字段
   });
   return {
@@ -110,4 +112,37 @@ export const getServerSideProps = async content => {
 };
 export default Home;
 
+```
+
+## 高级promiseAll混合使用
+
+sdk中内置promiseAll方法，供在node中同时请求返回数据，结合缓存API达到多线程缓存
+
+初始化缓存API相关见上面文档使用即可，关键在于页面层node调用，以nextjs页面为例：
+
+``` jsx
+import React from 'react';
+import { memoryCacheData } from '@kkb/node-cache';
+import { getHomeData } from '../../services/commonService';
+
+const Home = () => {}
+export const getServerSideProps = async content => {
+  // 同时请求所有接口，返回一个数组（所有接口数据），按顺序返回
+  const resArrs = await promiseAll([
+    memoryCacheData({
+      key: 'dataKey1', 
+      cb: () => getHomeData(1, 1),
+    }),
+    memoryCacheData({
+      key: 'dataKey2', 
+      cb: () => getHomeData(3, 1),
+    })
+  ]);
+  console.log('dataKey1', resArrs[0]);
+  console.log('dataKey2', resArrs[1]);
+  return {
+    props: {}
+  };
+};
+export default Home;
 ```

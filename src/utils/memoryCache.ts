@@ -52,11 +52,11 @@ export const memoryCacheData = async <T>({
   if (ssrCache.has(key)) {
     // 有缓存情况
     const cacheRes = ssrCache.get(key);
-    if (!debug) console.warn(`CACHE HIT: ${key}`);
+    if (debug) console.warn(`CACHE HIT: ${key}`);
     return cacheRes;
   }
   const cbRes = await cb?.();
-  if (!debug) console.warn(`CACHE MISS: ${key}`);
+  if (debug) console.warn(`CACHE MISS: ${key}`);
   // 缓存
   if ((!isCustom && cbRes?.code === code) || isCustom) {
     ssrCache.set(key, cbRes);

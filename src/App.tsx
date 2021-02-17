@@ -8,8 +8,8 @@ const App = () => {
         width: 600,
       }}
     >
-      hello npmBase
-    </div> 
+      hello
+    </div>
   );
 };
 export default App;

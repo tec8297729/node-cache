@@ -1,5 +1,5 @@
 const paths = require('./paths');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
@@ -90,6 +90,7 @@ module.exports = function (config) {
           },
         ],
       }),
+      new CleanWebpackPlugin(),
     ].filter(Boolean),
     externals: {
       // react: 'commonjs react',

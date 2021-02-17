@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "build",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es5",
-    "lib": ["esnext", "dom"],
-    "sourceMap": false,
+    "lib": ["es6", "dom", "es2015.promise"],
+    "sourceMap": true,
     "baseUrl": ".",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,

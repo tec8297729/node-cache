@@ -30,7 +30,7 @@ module.exports = {
     'prettier/react',
     'prettier/@typescript-eslint',
   ],
-  plugins: ['eslint-comments', 'jest', 'unicorn', 'react-hooks'],
+  plugins: ['eslint-comments', 'jest', 'react-hooks'],
   env: {
     browser: false,
     node: true,
@@ -115,8 +115,6 @@ module.exports = {
     ],
     '@typescript-eslint/camelcase': 0, // 驼峰规则
     '@typescript-eslint/no-var-requires': 0, // 禁止使用require语句
-    // Common abbreviations are known and readable
-    'unicorn/prevent-abbreviations': 'off',
     // 类属性和方法上需要显式的可访问性修饰符
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/interface-name-prefix': 0, // 强制接口名称不以I开头
