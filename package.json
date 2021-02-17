@@ -1,7 +1,7 @@
 {
   "name": "@kkb/node-cache",
-  "version": "0.1.6",
-  "description": "node端数据 高速缓存插件",
+  "version": "0.1.7-bate1",
+  "description": "一款node高速缓存sdk解决方案，让你的node具有质的改变！",
   "publishConfig": {
     "registry": "https://registry-npm.kaikeba.com/"
   },
@@ -14,7 +14,7 @@
     "build:prod": "cross-env BUILD_ENV=prod webpack",
     "build:win": "cross-env BUILD_ENV=win webpack",
     "build:ana": "cross-env ANA_TYPE=true BUILD_ENV=prod webpack",
-    "prepublish": "npm run build:prod",
+    "prepublishOnly": "npm run build:prod",
     "tags": "git tag v0.0.1 && git push origin --tags"
   },
   "main": "./build/index.js",

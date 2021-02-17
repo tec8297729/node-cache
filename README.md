@@ -1,18 +1,19 @@
 # node-cache
 
-node高速缓存插件，内存读写缓存功能。
+一款node高速缓存sdk解决方案，让你的node具有质的改变！
 
-简单包裹后端接口方法，即可享受高速缓存效果，
+简单包裹后端接口方法，即可享受高速缓存效果，或是使用redis高级API功能，让你的集群更高效的缓存数据！！
 
-## 内存缓存使用方法
+## 普通缓存使用方法
 
 以nextjs框架使用案例
-1、node启动层调用初始方法 memoryCacheInit
+1、在node层server.js文件内，调用memoryCacheInit初始方法。
 
 ``` ts
+// server.js
 const Koa = require('koa');
 const next = require('next');
-
+const { memoryCacheInit } = require('@kkb/node-cache');
 const app = next({dev});
 const server = new Koa();
 
@@ -21,13 +22,15 @@ app.prepare().then(() => {
   // nodeCache初始化缓存，以下为默认参数
   memoryCacheInit({
     max: 500, // 缓存最大值
-    maxAge: 1000 * 60 * 5, // 1小时（60），5分钟
+    maxAge: 1000 * 60 * 5, // 默认5分钟
   }); 
   server.listen(6000, () => {
     console.log(`> Ready on http://localhost:${port}`);
   }); 
 }
 ```
+
+<br>
 
 2、需要缓存接口，调用memoryCacheData方法进行包裹，即可缓存数据。
 
@@ -51,11 +54,14 @@ export const getServerSideProps = async content => {
 export default Home;
 ```
 
+<br><br>
+
 ## redis缓存使用方法
 
 1、node层初始化
 
 ``` ts
+// server.js
 const Koa = require('koa');
 const { redisCacheInit } = require('@kkb/node-cache');
 const next = require('next');
@@ -96,7 +102,7 @@ export const getServerSideProps = async content => {
     cb: () => getHomeData(), // cb缓存回调，getHomeData是后端接口
     debug: false, // 是否开启调试模式（可选），会打印是否记录缓存
     code: 0, // 缓存标识码（可选），默认为0，此code是接口返回的数据中带有code字段
-    expire: 10 // 缓存过期时间
+    expire: 10 // 缓存过期时间(可选)
   });
   return {
     props: {}

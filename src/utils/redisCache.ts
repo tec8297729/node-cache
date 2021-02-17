@@ -38,14 +38,22 @@ export const redisCacheInit = (options?: RedisCacheOpts) => {
   });
 };
 
-// 设置缓存数据
+/**
+ * node缓存数据方法（redis版本）
+ * @key 缓存数据的key，唯一性
+ * @expire 缓存过期时间
+ * @cb 请求接口回调
+ * @code 缓存标识码，默认为0，获取接口返回数据的code码
+ * @debug 是否开启调试模式，会打印是否记录缓存
+ * @isCustom 是否自定义缓存
+ */
 export const redisCacheData = <T>({
   key,
-  expire, // 过期时间
-  cb, // 接口回调
-  code = 0, // 缓存标识码
-  debug, // 是否开启调试模式，会打印是否记录缓存
-  isCustom = false, // 是否自定义缓存
+  expire,
+  cb,
+  code = 0,
+  debug,
+  isCustom = false,
 }: ICacheData): Promise<T> => {
   if (!redisClient) redisCacheInit();
   return new Promise((resolve, reject) => {
