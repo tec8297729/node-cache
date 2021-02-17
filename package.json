@@ -1,6 +1,6 @@
 {
   "name": "@kkb/node-cache",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "一款node高速缓存sdk解决方案，让你的node具有质的改变！",
   "publishConfig": {
     "registry": "https://registry-npm.kaikeba.com/"

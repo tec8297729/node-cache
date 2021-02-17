@@ -9,6 +9,7 @@
 ## 普通缓存使用方法
 
 以nextjs框架使用案例
+
 1、在node层server.js文件内，调用memoryCacheInit初始方法。
 
 ``` ts
@@ -116,7 +117,7 @@ export default Home;
 
 ## 高级promiseAll混合使用
 
-sdk中内置promiseAll方法，供在node中同时请求返回数据，结合缓存API达到多线程缓存
+sdk中内置promiseAll方法，用于node中并行请求N个接口，结合缓存API达到多线程缓存
 
 初始化缓存API相关见上面文档使用即可，关键在于页面层node调用，以nextjs页面为例：
 
